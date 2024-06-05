@@ -1,49 +1,42 @@
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from dados import Dados
-import pandas as pd
+from naive_bayes import Naive_bayes
 
-# Carregar os dados a partir de um arquivo CSV
-df = Dados('Bases/b2w.csv')
+# nome das bases de dados
+bases = ['Bases/b2w.csv', 'Bases/buscape.csv', 'Bases/olist.csv', 'Bases/utlc_apps.csv']
 
-# Transformar os textos em vetores numéricos
+# inicializa a classe Naive_bayes
+nv = Naive_bayes()
 
-def alterardados(n):
-    if n <= 2:
-        return 1
-    elif n == 3:
-        return 2
-    else:
-        return 3
+while(True):
+    # Menu inicial
+    print("Escolha sua base de dados\n"
+        "1: B2w\n"
+        "2: Buscape\n"
+        "3: Olist\n" 
+        "4: Utlc_apps")
+    i = int(input("Resposta: "))
 
-X = df.transform_data('review_text_processed')
+    # Carregar os dados a partir de um arquivo CSV
+    df = Dados(bases[i - 1])
 
-# Separar as características (X) e os rótulos (y)
-y = df.get_coluna('rating').map(alterardados)
+    # Separar as características (X) e os rótulos (y)
+    nv.start(df.transform_data('review_text_processed'), 
+            y = df.get_rating())
 
+    print('\nConjuntos de treinamento e teste separados!')
+    print('Tamanho do conjunto de treinamento:', nv.get_train_x().shape)
+    print('Tamanho do conjunto de teste:', nv.get_test_x().shape)
 
-# Dividir os dados em conjuntos de treinamento e teste
-train_x, test_x, train_y, test_y = train_test_split(X, y, test_size=0.20, random_state=42, stratify=y)
+    # Avaliar o desempenho do modelo
+    accuracy = nv.accuracy_score()
+    report = nv.classification_report()
+    conf_matrix = nv.confusion_matrix()
 
-print('Conjuntos de treinamento e teste separados!')
-print('Tamanho do conjunto de treinamento:', train_x.shape)
-print('Tamanho do conjunto de teste:', test_x.shape)
-
-# Treinar o modelo Naive Bayes
-nb_model = MultinomialNB()
-nb_model.fit(train_x, train_y)
-
-# Fazer previsões no conjunto de teste
-test_y_pred = nb_model.predict(test_x)
-
-# Avaliar o desempenho do modelo
-accuracy = accuracy_score(test_y, test_y_pred)
-report = classification_report(test_y, test_y_pred)
-conf_matrix = confusion_matrix(test_y, test_y_pred)
-
-print('Acurácia do modelo:', accuracy)
-print('Relatório de classificação:')
-print(report)
-print('Matriz de confusão:')
-print(conf_matrix)
+    print('\nAcurácia do modelo:', accuracy)
+    print('\nRelatório de classificação:')
+    print(report)
+    print('\nMatriz de confusão:')
+    print(conf_matrix)
+    print("\n")
