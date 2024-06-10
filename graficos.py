@@ -12,3 +12,6 @@ def plot_confusion_matrix(conf_matrix):
     plt.xlabel('Predicted')
     plt.ylabel('Actual')
     plt.show()
+
+# Plot confusion matrix for the current classifier
+plot_confusion_matrix(conf_matrix)
