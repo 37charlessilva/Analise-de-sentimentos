@@ -42,4 +42,4 @@ while(True):
     print("\n")
     
     # Plot confusion matrix for the current classifier
-    plot_confusion_matrix(conf_matrix, classes)
+    plot_confusion_matrix(conf_matrix, nv_classes_)
