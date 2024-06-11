@@ -15,5 +15,4 @@ def plot_confusion_matrix(conf_matrix, classes):
 
 nv_classes_ = ['Class 1', 'Class 2', 'Class 3']
 
-# Plot confusion matrix for the current classifier
-plot_confusion_matrix(conf_matrix, nv_classes_)
+
