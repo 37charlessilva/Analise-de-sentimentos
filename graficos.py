@@ -7,7 +7,7 @@ import numpy as np
 def plot_confusion_matrix(conf_matrix, classes):
     plt.figure(figsize=(8, 6))
     sns.heatmap(conf_matrix, annot=True, cmap='Blues', fmt='d', 
-                xticklabels=classes, yticklabels=classes)
+                xticklabels=nv.classes_, yticklabels=nv.classes_)
     plt.title('Confusion Matrix')
     plt.xlabel('Predicted')
     plt.ylabel('Actual')
