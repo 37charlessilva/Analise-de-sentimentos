@@ -40,6 +40,10 @@ while(True):
     print('\nMatriz de confusão:')
     print(conf_matrix)
     print("\n")
+
+    nv_classes_ = df.get_classes()  # Assuming you have a method in Dados class to get class names
+    plot_confusion_matrix(conf_matrix, nv_classes_)
     
     # Plot confusion matrix for the current classifier
     print(plot_confusion_matrix(conf_matrix, nv_classes_))
+    
