@@ -92,9 +92,12 @@ while True:
     print('Tamanho do conjunto de teste:', X_test.shape)
 
     # Avaliar o desempenho do modelo
-    accuracy = nv.accuracy_score(X_test, y_test)
+    """accuracy = nv.accuracy_score(X_test, y_test)
     report = nv.classification_report(X_test, y_test)
-    conf_matrix = nv.confusion_matrix(X_test, y_test)
+    conf_matrix = nv.confusion_matrix(X_test, y_test)"""
+    accuracy = nv.accuracy_score()
+    report = nv.classification_report()
+    conf_matrix = nv.confusion_matrix()
 
     print('\nAcurácia do modelo:', accuracy)
     print('\nRelatório de classificação:')
