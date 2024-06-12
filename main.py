@@ -56,6 +56,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 from naive_bayes import Naive_bayes
 from dados import Dados
+import graficos*
 
 # nome das bases de dados
 bases = ['Bases/b2w.csv', 'Bases/buscape.csv', 'Bases/olist.csv', 'Bases/utlc_apps.csv']
