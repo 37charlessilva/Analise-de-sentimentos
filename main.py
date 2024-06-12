@@ -82,7 +82,7 @@ while True:
     # Treinar modelo Naive Bayes
     nv.start(X_train, y_train)
 
-    df.head()
+    print(df.head())
     print('\nConjuntos de treinamento e teste separados!')
     print('Tamanho do conjunto de treinamento:', X_train.shape)
     print('Tamanho do conjunto de teste:', X_test.shape)
