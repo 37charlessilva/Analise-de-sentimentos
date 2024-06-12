@@ -47,7 +47,7 @@ while(True):
     # Plot confusion matrix for the current classifier
     print(plot_confusion_matrix(conf_matrix, nv_classes_))"""
 
-import sys
+#import sys
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -85,8 +85,9 @@ while True:
     nv.start(X_train, y_train)
 
     
-    z = df.get_head()
-    print(z)
+    #z = df.get_head()
+    #print(z)
+    print(df.get_head())
     print('\nConjuntos de treinamento e teste separados!')
     print()
     print('Tamanho do conjunto de treinamento:', X_train.shape)
