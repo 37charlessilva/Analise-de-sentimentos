@@ -46,3 +46,6 @@ class Dados:
         self.df[coluna] = self.df[coluna].fillna("")
         x = self.vetorizador.fit_transform(self.df[coluna])
         return x
+        
+    def get_classes(self):        
+        return ['Negativo', 'Neutro', 'Positivo']
