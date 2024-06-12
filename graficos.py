@@ -17,7 +17,7 @@ plot_confusion_matrix(conf_matrix, nv_classes_)"""
 
 
 class Graficos:
-    def plot_confusion_matrix(conf_matrix, classes):
+    def plot_confusion_matrix(conf_matrix, nv_classes_):
         # Plot confusion matrix
         plt.figure(figsize=(8, 6))
         sns.heatmap(conf_matrix, annot=True, cmap='Blues', fmt='d', 
