@@ -48,10 +48,10 @@ while(True):
     print(plot_confusion_matrix(conf_matrix, nv_classes_))"""
 
 #import sys
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.feature_extraction.text import TfidfVectorizer
+#import pandas as pd
+#import matplotlib.pyplot as plt
+#import seaborn as sns
+#from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 from naive_bayes import Naive_bayes
