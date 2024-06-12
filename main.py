@@ -87,6 +87,7 @@ while True:
     z = df.get_head()
     print(z)
     print('\nConjuntos de treinamento e teste separados!')
+    print()
     print('Tamanho do conjunto de treinamento:', X_train.shape)
     print('Tamanho do conjunto de teste:', X_test.shape)
 
