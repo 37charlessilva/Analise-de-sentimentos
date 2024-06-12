@@ -84,7 +84,8 @@ while True:
     nv.start(X_train, y_train)
 
     
-    df.get_head()
+    z = df.get_head()
+    print(z)
     print('\nConjuntos de treinamento e teste separados!')
     print('Tamanho do conjunto de treinamento:', X_train.shape)
     print('Tamanho do conjunto de teste:', X_test.shape)
