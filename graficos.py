@@ -16,7 +16,7 @@ def plot_confusion_matrix(conf_matrix, classes):
 plot_confusion_matrix(conf_matrix, nv_classes_)"""
 
 
-class Graficos
+class Graficos:
     def plot_confusion_matrix(conf_matrix, classes):
         # Plot confusion matrix
         plt.figure(figsize=(8, 6))
