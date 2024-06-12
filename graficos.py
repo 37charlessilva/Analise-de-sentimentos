@@ -1,6 +1,7 @@
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
+import sklearn.metrics import plot_confusion_matrix
 import pandas as pd
-import seaborn as sns
+#import seaborn as sns
 import numpy as np
 
 class Graficos:
