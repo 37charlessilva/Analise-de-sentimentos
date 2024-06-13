@@ -11,6 +11,9 @@ bases = ['Bases/b2w.csv', 'Bases/buscape.csv', 'Bases/olist.csv', 'Bases/utlc_ap
 # inicializa a classe Naive_bayes
 nv = Naive_bayes()
 
+# inicializa a classe Graficos
+graficos = Graficos
+
 while True:
     # Menu inicial
     print("Escolha sua base de dados\n"
