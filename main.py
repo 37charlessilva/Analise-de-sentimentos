@@ -57,7 +57,7 @@ from sklearn.naive_bayes import MultinomialNB
 from naive_bayes import Naive_bayes
 from dados import Dados
 from graficos import Graficos
-from sklearn.metrics import plot_confusion_matrix
+#from sklearn.metrics import plot_confusion_matrix
 
 # nome das bases de dados
 bases = ['Bases/b2w.csv', 'Bases/buscape.csv', 'Bases/olist.csv', 'Bases/utlc_apps.csv']
