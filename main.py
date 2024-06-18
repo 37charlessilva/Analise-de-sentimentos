@@ -55,13 +55,13 @@ while True:
     report1 = sv.classification_report()
     conf_matrix1 = sv.confusion_matrix()
 
-    print('\nAcurácia do modelo sv:', accuracy)
+    print('\nAcurácia do modelo sv:', accuracy1)
     print('\nRelatório de classificação:')
-    print(report)
+    print(report1)
     print('\nMatriz de confusão:')
-    print(conf_matrix)
+    print(conf_matrix1)
     print("\n")
 
-    """# implementa grafico da matriz de confusão
+    # implementa grafico da matriz de confusão
     nv_classes_ = df.get_classes()
-    graficos.plot_confusion_matrix(conf_matrix, nv_classes_)"""
+    graficos.plot_confusion_matrix(conf_matrix, nv_classes_)
