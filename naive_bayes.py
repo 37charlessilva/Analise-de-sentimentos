@@ -1,4 +1,3 @@
-from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
@@ -11,18 +10,18 @@ class Naive_bayes:
         self.test_y_pred = None
         self.nb_model = MultinomialNB()
         
-    def start(self, X, y):
-        """X vai ser os dados contindos em review_text_processed e y 
-        as avaliacoes dos produtos"""
+    def start(self, train_x, test_x, train_y, test_y):
         # Temos os conjuntos de teste e treinamento divididos
-        # 80 para treinamento e 20 para teste
-        self.train_x, self.test_x, self.train_y, self.test_y = train_test_split(X, y, test_size=0.20, random_state=42, stratify=y)
-        
+        self.train_x = train_x
+        self.test_x = test_x
+        self.train_y = train_y
+        self.test_y = test_y
+
         # Treinar o modelo Naive Bayes
-        self.nb_model.fit(self.train_x, self.train_y)
+        self.nb_model.fit(train_x, train_y)
 
         # Fazer previsões no conjunto de teste
-        self.test_y_pred = self.nb_model.predict(self.test_x)
+        self.test_y_pred = self.nb_model.predict(test_x)
 
     def get_train_x(self):
         # Retorna o conjunto de treino x
@@ -46,7 +45,7 @@ class Naive_bayes:
         return accuracy_score(self.test_y, self.test_y_pred)
 
     def classification_report(self):
-        # 
+        # Retorna um relatório detalhado das métricas de classificação
         return classification_report(self.test_y, self.test_y_pred)
     
     def confusion_matrix(self):

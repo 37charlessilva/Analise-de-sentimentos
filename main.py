@@ -1,8 +1,9 @@
 from sklearn.model_selection import train_test_split
-from sklearn.naive_bayes import MultinomialNB
 from naive_bayes import Naive_bayes
+from svm import SVM_model
 from dados import Dados
-from graficos import Graficos
+import graficos
+from time import sleep
 
 # nome das bases de dados
 bases = ['Bases/b2w.csv', 'Bases/buscape.csv', 'Bases/olist.csv', 'Bases/utlc_apps.csv']
@@ -10,8 +11,8 @@ bases = ['Bases/b2w.csv', 'Bases/buscape.csv', 'Bases/olist.csv', 'Bases/utlc_ap
 # inicializa a classe Naive_bayes
 nv = Naive_bayes()
 
-# inicializa a classe Graficos
-graficos = Graficos
+# inicializa a classe SVM_model
+sv =  SVM_model()
 
 while True:
     # Menu inicial
@@ -24,36 +25,43 @@ while True:
 
     # carrega os dados a partir de um arquivo CSV
     df = Dados(bases[i - 1])
+    sleep(0.5)
 
-    # separa as características (X) e os rótulos (y)
-    X = df.transform_data('review_text_processed')
-    y = df.get_rating()
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    # Seperando o conjunto de treino e teste
+    df.trainig_data()
 
-    # treina modelo Naive Bayes
-    nv.start(X_train, y_train)
-
-    print(df.get_head())
     print('\nConjuntos de treinamento e teste separados!')
-    print()
-    print('Tamanho do conjunto de treinamento:', X_train.shape)
-    print('Tamanho do conjunto de teste:', X_test.shape)
+    print('Tamanho do conjunto de treinamento:', df.get_train_x().shape)
+    print('Tamanho do conjunto de teste:', df.get_test_x().shape)
 
-    # avalia o desempenho do modelo
-    """accuracy = nv.accuracy_score(X_test, y_test)
-    report = nv.classification_report(X_test, y_test)
-    conf_matrix = nv.confusion_matrix(X_test, y_test)"""
+    nv.start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y())
+
+    # avalia o desempenho do modelo Naive_bayes
     accuracy = nv.accuracy_score()
     report = nv.classification_report()
     conf_matrix = nv.confusion_matrix()
 
-    print('\nAcurácia do modelo:', accuracy)
+    print('\nAcurácia do modelo nv:', accuracy)
     print('\nRelatório de classificação:')
     print(report)
     print('\nMatriz de confusão:')
     print(conf_matrix)
     print("\n")
 
-    # implementa grafico da matriz de confusão
+    sv.start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y())
+
+    # avalia o desempenho do modelo SVM_model
+    accuracy1 = sv.accuracy_score()
+    report1 = sv.classification_report()
+    conf_matrix1 = sv.confusion_matrix()
+
+    print('\nAcurácia do modelo sv:', accuracy)
+    print('\nRelatório de classificação:')
+    print(report)
+    print('\nMatriz de confusão:')
+    print(conf_matrix)
+    print("\n")
+
+    """# implementa grafico da matriz de confusão
     nv_classes_ = df.get_classes()
-    graficos.plot_confusion_matrix(conf_matrix, nv_classes_)
+    graficos.plot_confusion_matrix(conf_matrix, nv_classes_)"""
