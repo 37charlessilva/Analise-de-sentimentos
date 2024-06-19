@@ -1,7 +1,9 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
+from joblib import load
 from tqdm import tqdm
+import os
 
 class Dados:
     def __init__(self, file_path) -> None:
@@ -73,14 +75,14 @@ class Dados:
                 pos += 1
         return [round((neg / total) * 100), round((nel / total) * 100), round((pos / total) * 100)]
     
+    def get_classes(self):        
+        return ['Negativo', 'Neutro', 'Positivo']
+    
     def transform_data(self, coluna):
         # Vetoriza os dados da culuna
         self.df[coluna] = self.df[coluna].fillna("")
         x = self.vetorizador.fit_transform(self.df[coluna])
         return x
-        
-    def get_classes(self):        
-        return ['Negativo', 'Neutro', 'Positivo']
 
     def trainig_data(self):
         """X vai ser os dados contindos em review_text_processed e y 
@@ -91,3 +93,11 @@ class Dados:
         y = self.get_rating()
         
         self.train_x, self.test_x, self.train_y, self.test_y = train_test_split(X, y, test_size=0.20, random_state=42, stratify=y)
+    
+    def verify(self, pasta_modelos, nome_modelo):
+        # Verificar a existência dos modelos
+        caminho_modelo = os.path.join(pasta_modelos, nome_modelo) 
+        if os.path.exists(caminho_modelo + ".pk1"):
+            return True
+        else:
+            return False

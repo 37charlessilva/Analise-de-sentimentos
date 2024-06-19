@@ -23,21 +23,8 @@ class Naive_bayes:
         # Fazer previsões no conjunto de teste
         self.test_y_pred = self.nb_model.predict(test_x)
 
-    def get_train_x(self):
-        # Retorna o conjunto de treino x
-        return self.train_x
-    
-    def get_train_y(self):
-        # Retorna o conjunto de treino y
-        return self.train_y
-    
-    def get_test_x(self):
-        # Retorna o conjunto de teste x
-        return self.test_x
-    
-    def get_test_y(self):
-        # Retorna o conjunto de teste y
-        return self.test_y
+    def get_test_y_pred(self):
+        return self.test_y_pred
     
     # Avaliar o desempenho do modelo
     def accuracy_score(self):
@@ -46,7 +33,7 @@ class Naive_bayes:
 
     def classification_report(self):
         # Retorna um relatório detalhado das métricas de classificação
-        return classification_report(self.test_y, self.test_y_pred)
+        return classification_report(self.test_y, self.test_y_pred, output_dict=True)
     
     def confusion_matrix(self):
         # Retorna a matriz de confusão

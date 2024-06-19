@@ -1,9 +1,8 @@
-from sklearn.model_selection import train_test_split
+from joblib import load, dump
 from naive_bayes import Naive_bayes
 from svm import SVM_model
 from dados import Dados
 import graficos
-from time import sleep
 
 # nome das bases de dados
 bases = ['Bases/b2w.csv', 'Bases/buscape.csv', 'Bases/olist.csv', 'Bases/utlc_apps.csv']
@@ -25,43 +24,47 @@ while True:
 
     # carrega os dados a partir de um arquivo CSV
     df = Dados(bases[i - 1])
-    sleep(0.5)
 
     # Seperando o conjunto de treino e teste
     df.trainig_data()
 
     print('\nConjuntos de treinamento e teste separados!')
-    print('Tamanho do conjunto de treinamento:', df.get_train_x().shape)
+    print('Tamanho do conjunto de treinamento:', df.get_train_x().shape) 
     print('Tamanho do conjunto de teste:', df.get_test_x().shape)
+    
+    nv.start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y()) 
+    print("\nModelo Naive bayes treinado")
 
-    nv.start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y())
-
+    if(df.verify("Bases/", "svm_model_instance1") == False):
+        sv.start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y())
+        dump(sv, "Bases/svm_model_instance1" + ".pk1")
+        print("Modelo SVM treinado")
+    else:
+        print("\nModelo SVM recuperado\n")
+        sv = load("Bases/svm_model_instance1.pk1")
+        
     # avalia o desempenho do modelo Naive_bayes
     accuracy = nv.accuracy_score()
     report = nv.classification_report()
     conf_matrix = nv.confusion_matrix()
-
-    print('\nAcurácia do modelo nv:', accuracy)
-    print('\nRelatório de classificação:')
-    print(report)
-    print('\nMatriz de confusão:')
-    print(conf_matrix)
-    print("\n")
-
-    sv.start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y())
 
     # avalia o desempenho do modelo SVM_model
     accuracy1 = sv.accuracy_score()
     report1 = sv.classification_report()
     conf_matrix1 = sv.confusion_matrix()
 
-    print('\nAcurácia do modelo sv:', accuracy1)
-    print('\nRelatório de classificação:')
-    print(report1)
-    print('\nMatriz de confusão:')
-    print(conf_matrix1)
-    print("\n")
+    while(i != 0):
+        print("\n0: para voltar\n"
+            "1: Comparacao de acuracia\n"
+            "2: Comparacao dos relatorios de classificacao\n"
+            "3: Matriz de confusao")
+        i = int(input("Resposta: "))
 
-    # implementa grafico da matriz de confusão
-    nv_classes_ = df.get_classes()
-    graficos.plot_confusion_matrix(conf_matrix, nv_classes_)
+        if(i == 1):
+            graficos.plot_model_comparison(df.get_train_x().shape, df.get_test_x().shape, accuracy, accuracy1)
+        elif(i == 2):
+            classes = ["1", "2", "3"]
+            graficos.plot_classification_reports(report, report1, classes, "nv", "svm")
+        elif(i == 3):
+            graficos.plot_confusion_matrix(conf_matrix, df.get_classes())
+            graficos.plot_confusion_matrix(conf_matrix1, df.get_classes())

@@ -9,6 +9,7 @@ class SVM_model:
         self.train_y = None
         self.test_y = None
         self.test_y_pred = None
+        self.training_time = None
         self.svm_model = SVC(kernel=kernel, C=C)
         
     def start(self, train_x, test_x, train_y, test_y):
@@ -23,27 +24,17 @@ class SVM_model:
         self.svm_model.fit(self.train_x, self.train_y)
         end_time = time.time()
         
-        training_time = end_time - start_time
-        print(f"Tempo de treinamento do SVM: {training_time} segundos")
+        self.training_time = end_time - start_time
+        print(f"Tempo de treinamento do SVM: {self.training_time} segundos")
 
         # Fazer previsões no conjunto de teste
         self.test_y_pred = self.svm_model.predict(self.test_x)
 
-    def get_train_x(self):
-        # Retorna o conjunto de treino x
-        return self.train_x
+    def get_test_y_pred(self):
+        return self.test_y_pred
     
-    def get_train_y(self):
-        # Retorna o conjunto de treino y
-        return self.train_y
-    
-    def get_test_x(self):
-        # Retorna o conjunto de teste x
-        return self.test_x
-    
-    def get_test_y(self):
-        # Retorna o conjunto de teste y
-        return self.test_y
+    def get_training_time(self):
+        return self.training_time
     
     # Avaliar o desempenho do modelo
     def accuracy_score(self):
@@ -52,7 +43,7 @@ class SVM_model:
 
     def classification_report(self):
         # Retorna um relatório detalhado das métricas de classificação.
-        return classification_report(self.test_y, self.test_y_pred)
+        return classification_report(self.test_y, self.test_y_pred, output_dict=True)
     
     def confusion_matrix(self):
         # Retorna a matriz de confusão
