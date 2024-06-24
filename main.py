@@ -5,8 +5,8 @@ from dados import Dados
 import graficos
 
 # nome das bases de dados
-bases = ['Bases/b2w.csv', 'Bases/buscape.csv', 'Bases/olist.csv', 'Bases/utlc_apps.csv']
-
+bases = ['Bases/b2w', 'Bases/buscape', 'Bases/olist', 'Bases/utlc_apps']
+s = ['svm_model']
 # inicializa a classe Naive_bayes
 nv = Naive_bayes()
 
@@ -23,7 +23,7 @@ while True:
     i = int(input("Resposta: "))
 
     # carrega os dados a partir de um arquivo CSV
-    df = Dados(bases[i - 1])
+    df = Dados(bases[i - 1] + ".csv")
 
     # Seperando o conjunto de treino e teste
     df.trainig_data()
@@ -32,16 +32,19 @@ while True:
     print('Tamanho do conjunto de treinamento:', df.get_train_x().shape) 
     print('Tamanho do conjunto de teste:', df.get_test_x().shape)
     
+    #Treinamento do Naive bayes
     nv.start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y()) 
-    print("\nModelo Naive bayes treinado")
+    print("\nModelo Naive bayes treinado\n")
 
-    if(df.verify("Bases/", "svm_model_instance1") == False):
+    # Treinamento do SVM
+    if(df.verify(f"{bases[i - 1]}_{s[0]}_.pk1") == False):
+        print("Modelo SVM sendo treinado, pode levar algum tempo")
         sv.start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y())
-        dump(sv, "Bases/svm_model_instance1" + ".pk1")
+        dump(sv, f"{bases[i - 1]}_{s[0]}_.pk1")
         print("Modelo SVM treinado")
     else:
         print("\nModelo SVM recuperado\n")
-        sv = load("Bases/svm_model_instance1.pk1")
+        sv = load(f"{bases[i - 1]}_{s[0]}_.pk1")
         
     # avalia o desempenho do modelo Naive_bayes
     accuracy = nv.accuracy_score()
@@ -54,12 +57,11 @@ while True:
     conf_matrix1 = sv.confusion_matrix()
 
     while(i != 0):
-        print("\n0: para voltar\n"
+        print("\n0: Para voltar\n"
             "1: Comparacao de acuracia\n"
             "2: Comparacao dos relatorios de classificacao\n"
             "3: Matriz de confusao")
         i = int(input("Resposta: "))
-
         if(i == 1):
             graficos.plot_model_comparison(df.get_train_x().shape, df.get_test_x().shape, accuracy, accuracy1)
         elif(i == 2):
@@ -68,3 +70,4 @@ while True:
         elif(i == 3):
             graficos.plot_confusion_matrix(conf_matrix, df.get_classes())
             graficos.plot_confusion_matrix(conf_matrix1, df.get_classes())
+        print()

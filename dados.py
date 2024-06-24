@@ -94,10 +94,10 @@ class Dados:
         
         self.train_x, self.test_x, self.train_y, self.test_y = train_test_split(X, y, test_size=0.20, random_state=42, stratify=y)
     
-    def verify(self, pasta_modelos, nome_modelo):
+    def verify(self, path):
         # Verificar a existência dos modelos
-        caminho_modelo = os.path.join(pasta_modelos, nome_modelo) 
-        if os.path.exists(caminho_modelo + ".pk1"):
+        #caminho_modelo = os.path.join(pasta_modelos, nome_modelo) 
+        if os.path.exists(path):
             return True
         else:
             return False
