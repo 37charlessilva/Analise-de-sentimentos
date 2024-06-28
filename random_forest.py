@@ -10,7 +10,7 @@ class RandomForest:
         self.test_y = None
         self.test_y_pred = None
         self.training_time = None
-        self.rf_model = RandomForestClassifier(n_estimators=50, random_state=42)
+        self.rf_model = RandomForestClassifier(n_estimators=75, random_state=42)
         
     def start(self, train_x, test_x, train_y, test_y):
         # Temos os conjuntos de teste e treinamento divididos

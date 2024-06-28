@@ -13,21 +13,22 @@ def plot_confusion_matrix(conf_matrix, nv_classes_):
     plt.ylabel('Actual')
     plt.show()
 
-def plot_model_comparison(train_size, test_size, accuracy_nv, accuracy_sv):
+def plot_model_comparison(train_size, test_size, accuracy_nv, accuracy_sv, accuracy_rd):
     """
-    Plota a comparação de acurácia entre dois modelos.
+    Plota a comparação de acurácia entre três modelos.
 
     Parâmetros:
     - train_size: Tamanho do conjunto de treinamento (número de amostras).
     - test_size: Tamanho do conjunto de teste (número de amostras).
     - accuracy_nv: Acurácia do modelo nv.
     - accuracy_sv: Acurácia do modelo sv.
+    - accuracy_rd: Acurácia do modelo rd.
     """
-    models = ['Modelo nv', 'Modelo sv']
-    accuracies = [accuracy_nv, accuracy_sv]
+    models = ['Modelo nv', 'Modelo sv', 'Modelo rd']
+    accuracies = [accuracy_nv, accuracy_sv, accuracy_rd]
 
     plt.figure(figsize=(10, 6))
-    plt.bar(models, accuracies, color=['blue', 'green'])
+    plt.bar(models, accuracies, color=['blue', 'green', 'red'])
 
     plt.title(f'Comparação de Acurácia entre Modelos, Tamanho total: {train_size[0] + test_size[0]}\n'
               f'Tamanho do Conjunto de Treinamento: {train_size[0]}, Tamanho do Conjunto de Teste: {test_size[0]}')
@@ -41,19 +42,22 @@ def plot_model_comparison(train_size, test_size, accuracy_nv, accuracy_sv):
 
     plt.show()
 
-def plot_classification_reports(report1, report2, classes, title1='Modelo 1', title2='Modelo 2'):
+def plot_classification_reports(report1, report2, report3, classes, title1='Modelo 1', title2='Modelo 2', title3='Modelo 3'):
     metrics = ['precision', 'recall', 'f1-score']
     x = np.arange(len(classes))
-    width = 0.3  # Diminuir a largura das barras
+    width = 0.2  # Ajuste da largura das barras para acomodar três conjuntos de barras
 
-    fig, ax = plt.subplots(3, 1, figsize=(10, 14), sharex=True)
+    fig, ax = plt.subplots(3, 1, figsize=(12, 18), sharex=True)
     
     for i, metric in enumerate(metrics):
         values1 = [report1[c][metric] for c in classes]
         values2 = [report2[c][metric] for c in classes]
+        values3 = [report3[c][metric] for c in classes]
         
-        bars1 = ax[i].bar(x - width/2, values1, width, label=title1)
-        bars2 = ax[i].bar(x + width/2, values2, width, label=title2)
+        bars1 = ax[i].bar(x - width, values1, width, label=title1)
+        bars2 = ax[i].bar(x, values2, width, label=title2)
+        bars3 = ax[i].bar(x + width, values3, width, label=title3)
+        
         ax[i].set_xticks(x)
         ax[i].set_xticklabels(classes)
         ax[i].set_ylabel(metric.capitalize())
@@ -61,13 +65,10 @@ def plot_classification_reports(report1, report2, classes, title1='Modelo 1', ti
         ax[i].set_ylim(0, 1)
         
         # Adicionar os valores em cima das barras
-        for bar in bars1:
-            height = bar.get_height()
-            ax[i].text(bar.get_x() + bar.get_width() / 2, height, f'{height:.2f}', ha='center', va='bottom')
-        
-        for bar in bars2:
-            height = bar.get_height()
-            ax[i].text(bar.get_x() + bar.get_width() / 2, height, f'{height:.2f}', ha='center', va='bottom')
+        for bars in [bars1, bars2, bars3]:
+            for bar in bars:
+                height = bar.get_height()
+                ax[i].text(bar.get_x() + bar.get_width() / 2, height, f'{height:.2f}', ha='center', va='bottom')
 
     plt.suptitle('Comparação de Relatórios de Classificação')
     plt.xlabel('Classes')

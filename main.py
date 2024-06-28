@@ -1,18 +1,25 @@
 from joblib import load, dump
 from naive_bayes import Naive_bayes
 from svm import SVM_model
+from random_forest import RandomForest 
+#from lstm import LSTM_model
 from dados import Dados
 import graficos
 
-# nome das bases de dados
+# nome das bases de dados e modelos
 bases = ['Bases/b2w', 'Bases/buscape', 'Bases/olist', 'Bases/utlc_apps']
-s = ['svm_model']
+s = ['svm_model', 'random_forest_model']
+
 # inicializa a classe Naive_bayes
 nv = Naive_bayes()
 
 # inicializa a classe SVM_model
-sv =  SVM_model()
+sv = SVM_model()
 
+# inicializa o modelo random forest
+rd = RandomForest()
+
+modelos = [nv, sv, rd]
 while True:
     # Menu inicial
     print("Escolha sua base de dados\n"
@@ -36,16 +43,21 @@ while True:
     nv.start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y()) 
     print("\nModelo Naive bayes treinado\n")
 
-    # Treinamento do SVM
-    if(df.verify(f"{bases[i - 1]}_{s[0]}_.pk1") == False):
-        print("Modelo SVM sendo treinado, pode levar algum tempo")
-        sv.start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y())
-        dump(sv, f"{bases[i - 1]}_{s[0]}_.pk1")
-        print("Modelo SVM treinado")
-    else:
-        print("\nModelo SVM recuperado\n")
-        sv = load(f"{bases[i - 1]}_{s[0]}_.pk1")
-        
+    # Treinamento do SVM e random forest
+
+    for c in range(1, len(modelos)):
+        if(df.verify(f"{bases[i - 1]}_{s[c - 1]}_.pk1") == False):
+            print(f"{s[c - 1].upper()} em treinamento, pode levar algum tempo\n")
+            modelos[c].start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y())
+            dump(modelos[c], f"{bases[i - 1]}_{s[c - 1]}_.pk1")
+            print(f"{s[c - 1].upper()} treinado")
+        else:
+            print(f"Modelo {s[c - 1]} recuperado\n")
+            modelos[c] = load(f"{bases[i - 1]}_{s[c - 1]}_.pk1")
+    
+    sv = modelos[1]
+    rd = modelos[2]
+
     # avalia o desempenho do modelo Naive_bayes
     accuracy = nv.accuracy_score()
     report = nv.classification_report()
@@ -55,7 +67,15 @@ while True:
     accuracy1 = sv.accuracy_score()
     report1 = sv.classification_report()
     conf_matrix1 = sv.confusion_matrix()
+    
+    accuracy2 = rd.accuracy_score()
+    report2 = rd.classification_report()
+    conf_matrix2 = rd.confusion_matrix()
+    """ls = LSTM_model(df.get_vocab_size, df.max_sequence_length)
 
+    ls.start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y())
+
+    print(ls.accuracy_score)"""
     while(i != 0):
         print("\n0: Para voltar\n"
             "1: Comparacao de acuracia\n"
@@ -63,11 +83,12 @@ while True:
             "3: Matriz de confusao")
         i = int(input("Resposta: "))
         if(i == 1):
-            graficos.plot_model_comparison(df.get_train_x().shape, df.get_test_x().shape, accuracy, accuracy1)
+            graficos.plot_model_comparison(df.get_train_x().shape, df.get_test_x().shape, accuracy, accuracy1, accuracy2)
         elif(i == 2):
             classes = ["1", "2", "3"]
-            graficos.plot_classification_reports(report, report1, classes, "nv", "svm")
+            graficos.plot_classification_reports(report, report1, report2, classes, "nv", "sv", "rd")
         elif(i == 3):
             graficos.plot_confusion_matrix(conf_matrix, df.get_classes())
             graficos.plot_confusion_matrix(conf_matrix1, df.get_classes())
+            graficos.plot_confusion_matrix(conf_matrix2, df.get_classes())
         print()
