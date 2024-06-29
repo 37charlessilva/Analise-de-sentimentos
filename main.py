@@ -55,7 +55,7 @@ while True:
 
     sv = modelos[1]
     rd = modelos[2] """
-
+"""
     # avalia o desempenho do modelo Naive_bayes
     accuracy = nv.accuracy_score()
     report = nv.classification_report()
@@ -68,7 +68,7 @@ while True:
 
     accuracy2 = rd.accuracy_score()
     report2 = rd.classification_report()
-    conf_matrix2 = rd.confusion_matrix()
+    conf_matrix2 = rd.confusion_matrix()  """
 
     while i != 0:
         print("\n0: Para voltar\n"
