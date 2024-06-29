@@ -22,10 +22,10 @@ modelos = [nv, sv, rd]
 while True:
     # Menu inicial
     print("Escolha sua base de dados\n"
-          "1: B2w\n"
-          "2: Buscape\n"
-          "3: Olist\n"
-          "4: Utlc_apps")
+          "1: b2w\n"
+          "2: buscape\n"
+          "3: olist\n"
+          "4: utlc_apps")
     i = int(input("Resposta: "))
 
     # carrega os dados a partir de um arquivo CSV
