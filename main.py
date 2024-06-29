@@ -1,7 +1,7 @@
 from joblib import load, dump
+from sklearn.ensemble import RandomForestClassifier
 from naive_bayes import Naive_bayes
 from svm import SVM_model
-from sklearn.ensemble import RandomForestClassifier
 from dados import Dados
 import graficos
 
@@ -22,10 +22,10 @@ modelos = [nv, sv, rd]
 while True:
     # Menu inicial
     print("Escolha sua base de dados\n"
-          "1: b2w\n"
-          "2: buscape\n"
-          "3: olist\n"
-          "4: utlc_apps")
+          "1: B2w\n"
+          "2: Buscape\n"
+          "3: Olist\n"
+          "4: Utlc_apps")
     i = int(input("Resposta: "))
 
     # carrega os dados a partir de um arquivo CSV
@@ -41,7 +41,7 @@ while True:
     # Treinamento do Naive bayes
     nv.start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y())
     print("\nModelo Naive bayes treinado\n")
-"""
+
     # Treinamento do SVM e random forest
     for c in range(1, len(modelos)):
         if df.verify(f"{bases[i - 1]}_{s[c - 1]}_.pk1") == False:
@@ -54,8 +54,8 @@ while True:
             modelos[c] = load(f"{bases[i - 1]}_{s[c - 1]}_.pk1")
 
     sv = modelos[1]
-    rd = modelos[2] """
-"""
+    rd = modelos[2]
+
     # avalia o desempenho do modelo Naive_bayes
     accuracy = nv.accuracy_score()
     report = nv.classification_report()
@@ -68,7 +68,7 @@ while True:
 
     accuracy2 = rd.accuracy_score()
     report2 = rd.classification_report()
-    conf_matrix2 = rd.confusion_matrix()  """
+    conf_matrix2 = rd.confusion_matrix()
 
     while i != 0:
         print("\n0: Para voltar\n"
@@ -86,4 +86,5 @@ while True:
             graficos.plot_confusion_matrix(conf_matrix1, df.get_classes())
             graficos.plot_confusion_matrix(conf_matrix2, df.get_classes())
         print()
+
 
