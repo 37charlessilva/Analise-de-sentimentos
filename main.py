@@ -3,6 +3,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
 from joblib import load, dump
 from dados import Dados
 from graficos import plot_model_comparison, plot_classification_reports, plot_confusion_matrix
