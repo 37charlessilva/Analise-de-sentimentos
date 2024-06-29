@@ -41,7 +41,7 @@ while True:
     # Treinamento do Naive bayes
     nv.start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y())
     print("\nModelo Naive bayes treinado\n")
-
+"""
     # Treinamento do SVM e random forest
     for c in range(1, len(modelos)):
         if df.verify(f"{bases[i - 1]}_{s[c - 1]}_.pk1") == False:
@@ -54,7 +54,7 @@ while True:
             modelos[c] = load(f"{bases[i - 1]}_{s[c - 1]}_.pk1")
 
     sv = modelos[1]
-    rd = modelos[2]
+    rd = modelos[2] """
 
     # avalia o desempenho do modelo Naive_bayes
     accuracy = nv.accuracy_score()
