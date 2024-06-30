@@ -3,17 +3,17 @@ import seaborn as sns
 import numpy as np
 
 def plot_dual_pie_charts(predict_counts, actual_counts):
-    categories = ['Positivo', 'Neutro', 'Negativo']
-    colors = ['#1f77b4', '#ff7f0e', '#2ca02c']  # Cores para positivo, neutro e negativo
+    labels = ['Positivo', 'Neutro', 'Negativo']
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c']
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
 
     # Gráfico de pizza para previsões (predict)
-    ax1.pie(predict_counts, labels=categories, autopct='%1.1f%%', colors=colors, startangle=90)
+    ax1.pie(predict_counts, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90)
     ax1.set_title('Predicted Class Distribution')
 
     # Gráfico de pizza para classes reais (actual)
-    ax2.pie(actual_counts, labels=categories, autopct='%1.1f%%', colors=colors, startangle=90)
+    ax2.pie(actual_counts, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90)
     ax2.set_title('Actual Class Distribution')
 
     plt.tight_layout()
