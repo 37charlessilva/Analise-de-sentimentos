@@ -76,8 +76,8 @@ while True:
     
     # Avaliação do desempenho do modelo RandomForestClassifier
     accuracy2 = rd.score(df.get_test_x(), df.get_test_y())  # Usando score() para RandomForestClassifier
-    report2 = "Report for RandomForestClassifier"  # Você pode ajustar conforme necessário
-    conf_matrix2 = "Confusion matrix for RandomForestClassifier"  # Ajuste conforme necessário
+    report2 = rd.predict(df.get_test_x())  # Replace with actual predictions for report
+    conf_matrix2 = confusion_matrix(df.get_test_y(), report2)  # Replace with actual confusion matrix
 
     while i != 0:
         print("\n0: Para voltar\n"
@@ -95,10 +95,8 @@ while True:
             graficos.plot_confusion_matrix(conf_matrix, df.get_classes())
             graficos.plot_confusion_matrix(conf_matrix1, df.get_classes())
         elif i == 4:
-            # Aqui você precisa passar as contagens apropriadas para as previsões e classes reais
-            # Supondo que você tenha essas contagens armazenadas em predict_counts e actual_counts
-            predict_counts = [predict_counts['positivo'], predict_counts['neutro'], predict_counts['negativo']]
-            actual_counts = [actual_counts['positivo'], actual_counts['neutro'], actual_counts['negativo']]
+          predict_counts = [list(report.values()).count(classe) for classe in classes]
+          actual_counts = [list(df.get_test_y()).count(classe) for classe in classes]
             graficos.plot_dual_pie_charts(predict_counts, actual_counts)
         print()
 
