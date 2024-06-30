@@ -83,7 +83,7 @@ while True:
         print("\n0: Para voltar\n"
               "1: Comparação de acurácia\n"
               "2: Comparação dos relatórios de classificação\n"
-              "3: Matriz de confusão"\n
+              "3: Matriz de confusão\n"
               "4: Gráfico Pizza")
         i = int(input("Resposta: "))
         if i == 1:
