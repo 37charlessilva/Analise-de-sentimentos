@@ -2,10 +2,21 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-def plot_pie_chart(labels, counts, title):
-    plt.figure(figsize=(8, 6))
-    plt.pie(counts, labels=labels, autopct='%1.1f%%', colors=sns.color_palette('Blues', len(labels)))
-    plt.title(title)
+def plot_dual_pie_charts(predict_counts, actual_counts):
+    categories = ['Positivo', 'Neutro', 'Negativo']
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c']  # Cores para positivo, neutro e negativo
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
+
+    # Gráfico de pizza para previsões (predict)
+    ax1.pie(predict_counts, labels=categories, autopct='%1.1f%%', colors=colors, startangle=90)
+    ax1.set_title('Predicted Class Distribution')
+
+    # Gráfico de pizza para classes reais (actual)
+    ax2.pie(actual_counts, labels=categories, autopct='%1.1f%%', colors=colors, startangle=90)
+    ax2.set_title('Actual Class Distribution')
+
+    plt.tight_layout()
     plt.show()
 
 def plot_confusion_matrix(conf_matrix, nv_classes_):
@@ -17,12 +28,7 @@ def plot_confusion_matrix(conf_matrix, nv_classes_):
     plt.title('Confusion Matrix')
     plt.xlabel('Predicted')
     plt.ylabel('Actual')
-    
-    # Plot pie chart for predicted class distribution
-    plt.subplot(1, 2, 2)
-    labels, counts = np.unique(conf_matrix.argmax(axis=1), return_counts=True)
-    plot_pie_chart(nv_classes_[labels], counts, 'Predicted Class Distribution')
-    
+       
     plt.tight_layout()
     plt.show()
 
