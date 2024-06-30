@@ -84,7 +84,7 @@ while True:
               "1: Comparação de acurácia\n"
               "2: Comparação dos relatórios de classificação\n"
               "3: Matriz de confusão"\n
-              "4: Gráfico Pizza)
+              "4: Gráfico Pizza")
         i = int(input("Resposta: "))
         if i == 1:
             graficos.plot_model_comparison(df.get_train_x().shape, df.get_test_x().shape, accuracy, accuracy1, accuracy2)
@@ -97,7 +97,7 @@ while True:
             # Não precisa plotar a matriz de confusão para RandomForestClassifier aqui se já foi plotada acima
             # graficos.plot_confusion_matrix(conf_matrix2, df.get_classes())
         elif i == 4:
-            graficos.plot_
+            graficos.plot_dual_pie_charts()
         print()
 
 
