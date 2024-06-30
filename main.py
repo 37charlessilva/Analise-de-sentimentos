@@ -97,8 +97,8 @@ while True:
         elif i == 4:
             # Aqui você precisa passar as contagens apropriadas para as previsões e classes reais
             # Supondo que você tenha essas contagens armazenadas em predict_counts e actual_counts
-            predict_counts = {'positivo': 25, 'neutro': 30, 'negativo': 45}
-            actual_counts = {'positivo': 20, 'neutro': 35, 'negativo': 40}
+            predict_counts = [predict_counts['positivo'], predict_counts['neutro'], predict_counts['negativo']]
+            actual_counts = [actual_counts['positivo'], actual_counts['neutro'], actual_counts['negativo']]
             graficos.plot_dual_pie_charts(predict_counts, actual_counts)
         print()
 
