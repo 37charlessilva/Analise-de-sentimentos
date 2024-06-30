@@ -2,6 +2,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
+def plot_pie_chart(labels, counts, title):
+    plt.figure(figsize=(8, 6))
+    plt.pie(counts, labels=labels, autopct='%1.1f%%', colors=sns.color_palette('Blues', len(labels)))
+    plt.title(title)
+    plt.show()
+
 def plot_confusion_matrix(conf_matrix, nv_classes_):
     # Plot confusion matrix
     plt.figure(figsize=(14, 6))
@@ -12,11 +18,10 @@ def plot_confusion_matrix(conf_matrix, nv_classes_):
     plt.xlabel('Predicted')
     plt.ylabel('Actual')
     
-    # Plot pie charts for predicted and actual classes
+    # Plot pie chart for predicted class distribution
     plt.subplot(1, 2, 2)
     labels, counts = np.unique(conf_matrix.argmax(axis=1), return_counts=True)
-    plt.pie(counts, labels=nv_classes_[labels], autopct='%1.1f%%', colors=sns.color_palette('Blues', len(nv_classes_)))
-    plt.title('Predicted Class Distribution')
+    plot_pie_chart(nv_classes_[labels], counts, 'Predicted Class Distribution')
     
     plt.tight_layout()
     plt.show()
@@ -75,3 +80,4 @@ def plot_classification_reports(report1, report2, report3, classes, title1='Mode
     plt.xlabel('Classes')
     plt.xticks(rotation=0)  # Ajustar a rotação dos rótulos das classes
     plt.show()
+
