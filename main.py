@@ -53,14 +53,17 @@ while True:
             print(f"Modelo {s[c - 1]} recuperado\n")
             modelos[c] = load(f"{bases[i - 1]}_{s[c - 1]}_.pk1")
 
-    # Treinamento
-    rd.fit(df.get_train_x(), df.get_train_y())
+    # Treinamento (supondo que 'start' seja um método válido para esses modelos)
+    sv.start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y())
+    rd.start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y())
 
-    # Salvando o modelo treinado
-    dump(rd, f"{bases[i - 1]}_{s[c - 1]}_.pk1")
+    # Salvando os modelos treinados
+    dump(sv, f"{bases[i - 1]}_{s[0]}_.pk1")
+    dump(rd, f"{bases[i - 1]}_{s[1]}_.pk1")
 
-    # Carregando o modelo treinado
-    rd = load(f"{bases[i - 1]}_{s[c - 1]}_.pk1")
+    # Carregando os modelos treinados
+    sv = load(f"{bases[i - 1]}_{s[0]}_.pk1")
+    rd = load(f"{bases[i - 1]}_{s[1]}_.pk1")
 
     sv = modelos[1]
     rd = modelos[2]
