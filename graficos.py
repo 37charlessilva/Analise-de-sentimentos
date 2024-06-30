@@ -2,27 +2,28 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-
 def plot_confusion_matrix(conf_matrix, nv_classes_):
     # Plot confusion matrix
-    plt.figure(figsize=(8, 6))
+    plt.figure(figsize=(14, 6))
+    plt.subplot(1, 2, 1)
     sns.heatmap(conf_matrix, annot=True, cmap='Blues', fmt='d', 
                 xticklabels=nv_classes_, yticklabels=nv_classes_)
     plt.title('Confusion Matrix')
     plt.xlabel('Predicted')
     plt.ylabel('Actual')
+    
+    # Plot pie charts for predicted and actual classes
+    plt.subplot(1, 2, 2)
+    labels, counts = np.unique(conf_matrix.argmax(axis=1), return_counts=True)
+    plt.pie(counts, labels=nv_classes_[labels], autopct='%1.1f%%', colors=sns.color_palette('Blues', len(nv_classes_)))
+    plt.title('Predicted Class Distribution')
+    
+    plt.tight_layout()
     plt.show()
 
 def plot_model_comparison(train_size, test_size, accuracy_nv, accuracy_sv, accuracy_rd):
     """
     Plota a comparação de acurácia entre três modelos.
-
-    Parâmetros:
-    - train_size: Tamanho do conjunto de treinamento (número de amostras).
-    - test_size: Tamanho do conjunto de teste (número de amostras).
-    - accuracy_nv: Acurácia do modelo nv.
-    - accuracy_sv: Acurácia do modelo sv.
-    - accuracy_rd: Acurácia do modelo rd.
     """
     models = ['Modelo nv', 'Modelo sv', 'Modelo rd']
     accuracies = [accuracy_nv, accuracy_sv, accuracy_rd]
