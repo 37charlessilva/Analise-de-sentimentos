@@ -94,13 +94,11 @@ while True:
         elif i == 3:
             graficos.plot_confusion_matrix(conf_matrix, df.get_classes())
             graficos.plot_confusion_matrix(conf_matrix1, df.get_classes())
-            # Não precisa plotar a matriz de confusão para RandomForestClassifier aqui se já foi plotada acima
-            # graficos.plot_confusion_matrix(conf_matrix2, df.get_classes())
         elif i == 4:
             # Aqui você precisa passar as contagens apropriadas para as previsões e classes reais
             # Supondo que você tenha essas contagens armazenadas em predict_counts e actual_counts
-            predict_counts = [10, 20, 30]  # Substitua pelos valores corretos
-            actual_counts = [15, 25, 20]   # Substitua pelos valores corretos
+            predict_counts = {'positivo': 25, 'neutro': 30, 'negativo': 45}
+            actual_counts = {'positivo': 20, 'neutro': 35, 'negativo': 40}
             graficos.plot_dual_pie_charts(predict_counts, actual_counts)
         print()
 
