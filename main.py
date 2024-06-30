@@ -95,8 +95,8 @@ while True:
             graficos.plot_confusion_matrix(conf_matrix, df.get_classes())
             graficos.plot_confusion_matrix(conf_matrix1, df.get_classes())
         elif i == 4:
-          predict_counts = [list(report.values()).count(classe) for classe in classes]
-          actual_counts = [list(df.get_test_y()).count(classe) for classe in classes]
+            predict_counts = [list(report.values()).count(classe) for classe in classes]
+            actual_counts = [list(df.get_test_y()).count(classe) for classe in classes]
             graficos.plot_dual_pie_charts(predict_counts, actual_counts)
         print()
 
