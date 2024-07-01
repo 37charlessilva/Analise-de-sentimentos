@@ -1,3 +1,4 @@
+"""
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 import time
@@ -48,3 +49,32 @@ class SVM_model:
     def confusion_matrix(self):
         # Retorna a matriz de confusão
         return confusion_matrix(self.test_y, self.test_y_pred)
+
+
+# svm.py
+"""
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+class SVM_model:
+    def __init__(self):
+        self.model = SVC(kernel='linear')  # Exemplo usando kernel linear, pode ser ajustado conforme necessário
+    
+    def train(self, X_train, y_train):
+        self.model.fit(X_train, y_train)
+    
+    def predict(self, X_test):
+        return self.model.predict(X_test)
+    
+    def accuracy_score(self, X_test, y_test):
+        predictions = self.predict(X_test)
+        return accuracy_score(y_test, predictions)
+    
+    def classification_report(self, X_test, y_test):
+        predictions = self.predict(X_test)
+        return classification_report(y_test, predictions)
+    
+    def confusion_matrix(self, X_test, y_test):
+        predictions = self.predict(X_test)
+        return confusion_matrix(y_test, predictions)
+
