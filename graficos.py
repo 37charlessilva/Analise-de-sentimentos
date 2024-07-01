@@ -8,41 +8,60 @@ def plot_dual_pie_charts(predict_counts, actual_counts):
         raise ValueError("predict_counts e actual_counts devem ter o mesmo número de elementos.")
 
     # Definir rótulos de acordo com o número de fatias
-    labels = ['Positivo', 'Neutro', 'Negativo'] 
+    labels = ['Negativo', 'Neutro', 'Positivo'] 
     colors = ['#1f77b4', '#ff7f0e', '#2ca02c']  
     
     # Verificar se o número de rótulos corresponde ao número de fatias
     if len(labels) != len(predict_counts):
         raise ValueError("Número incorreto de rótulos fornecidos para o número de fatias.")
 
+    def autopct_generator(pct):
+        return f'{pct:.1f}%' if pct > 5 else ''
+
+    def check_100_percent(counts):
+        total = sum(counts)
+        for count, label in zip(counts, labels):
+            if count == total:
+                return label
+        return None
+
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
 
-    ax1.pie(predict_counts, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90)
+    # Verificar se a distribuição predita é 100% uma única categoria
+    predict_100_percent_label = check_100_percent(predict_counts)
+    if predict_100_percent_label:
+        ax1.pie([1], labels=[predict_100_percent_label], colors=[colors[labels.index(predict_100_percent_label)]], startangle=90)
+    else:
+        wedges1, texts1, autotexts1 = ax1.pie(predict_counts, labels=labels, autopct=autopct_generator, colors=colors, startangle=90)
+        for text in autotexts1:
+            text.set_fontsize(10)
+            text.set_color('white')
+
     ax1.set_title('Predicted Class Distribution')
 
-    ax2.pie(actual_counts, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90)
+    # Verificar se a distribuição real é 100% uma única categoria
+    actual_100_percent_label = check_100_percent(actual_counts)
+    if actual_100_percent_label:
+        ax2.pie([1], labels=[actual_100_percent_label], colors=[colors[labels.index(actual_100_percent_label)]], startangle=90)
+    else:
+        wedges2, texts2, autotexts2 = ax2.pie(actual_counts, labels=labels, autopct=autopct_generator, colors=colors, startangle=90)
+        for text in autotexts2:
+            text.set_fontsize(10)
+            text.set_color('white')
+
     ax2.set_title('Actual Class Distribution')
 
     plt.tight_layout()
     plt.show()
-"""
-# Exemplo de uso
-predict_counts = [60, 30, 10]  # Exemplo com três valores
-actual_counts = [50, 35, 15]   # Exemplo com três valores
-plot_dual_pie_charts(predict_counts, actual_counts)"""
 
-    
-def plot_confusion_matrix(conf_matrix, nv_classes_):
+def plot_confusion_matrix(conf_matrix, nv_classes_, text):
     # Plot confusion matrix
-    plt.figure(figsize=(14, 6))
-    plt.subplot(1, 2, 1)
+    plt.figure(figsize=(8, 6))
     sns.heatmap(conf_matrix, annot=True, cmap='Blues', fmt='d', 
                 xticklabels=nv_classes_, yticklabels=nv_classes_)
-    plt.title('Confusion Matrix')
+    plt.title(text + ' Confusion Matrix')
     plt.xlabel('Predicted')
     plt.ylabel('Actual')
-       
-    plt.tight_layout()
     plt.show()
 
 def plot_model_comparison(train_size, test_size, accuracy_nv, accuracy_sv, accuracy_rd):
@@ -100,3 +119,27 @@ def plot_classification_reports(report1, report2, report3, classes, title1='Mode
     plt.xticks(rotation=0)  # Ajustar a rotação dos rótulos das classes
     plt.show()
 
+def plot_pie_chart(percentages):
+    """
+    Plota um gráfico de pizza com base nas porcentagens fornecidas.
+    """
+
+    # Verificando se a lista tem exatamente três elementos
+    if len(percentages) != 3:
+        raise ValueError("A lista deve conter exatamente três porcentagens.")
+    
+    # Rótulos para cada fatia da pizza
+    labels = ['Negativo', 'Neltro', 'Positivo']
+
+    # Cores para cada fatia
+    colors = ['#ff9999', '#66b3ff', '#99ff99']
+
+    # Criando o gráfico de pizza
+    plt.figure(figsize=(8, 8))
+    plt.pie(percentages, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140)
+
+    # Título do gráfico
+    plt.title('Distribuição dos Dados na Base de Dados')
+
+    # Exibir o gráfico
+    plt.show()
