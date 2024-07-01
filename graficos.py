@@ -50,15 +50,15 @@ def plot_dual_pie_charts(predict_counts, actual_counts):
     plt.show"""
 
 def plot_dual_pie_charts(predict_counts, actual_counts):
-    # Verifique se predict_counts e actual_counts têm o mesmo número de elementos
+    # Verificar se predict_counts e actual_counts têm o mesmo número de elementos
     if len(predict_counts) != len(actual_counts):
         raise ValueError("predict_counts e actual_counts devem ter o mesmo número de elementos.")
 
-    # Defina os rótulos com base nos dados fornecidos
-    labels = ['Predicted', 'Actual']
-    colors = ['blue', 'green']
-
-    # Verifique se o número de rótulos corresponde ao número de fatias
+    # Definir rótulos de acordo com o número de fatias
+    labels = ['Positive', 'Neutral', 'Negative']  # Exemplo de rótulos
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c']  # Exemplo de cores
+    
+    # Verificar se o número de rótulos corresponde ao número de fatias
     if len(labels) != len(predict_counts):
         raise ValueError("Número incorreto de rótulos fornecidos para o número de fatias.")
 
@@ -72,6 +72,12 @@ def plot_dual_pie_charts(predict_counts, actual_counts):
 
     plt.tight_layout()
     plt.show()
+
+# Exemplo de uso
+predict_counts = [60, 30, 10]  # Exemplo com três valores
+actual_counts = [50, 35, 15]   # Exemplo com três valores
+plot_dual_pie_charts(predict_counts, actual_counts)
+
     
 def plot_confusion_matrix(conf_matrix, nv_classes_):
     # Plot confusion matrix
