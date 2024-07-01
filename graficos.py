@@ -2,53 +2,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-"""
-def plot_dual_pie_charts(predict_counts, actual_counts):
-    labels = ['Positivo', 'Neutro', 'Negativo']
-    colors = ['#1f77b4', '#ff7f0e', '#2ca02c']
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
-
-    # Gráfico de pizza para previsões (predict)
-    ax1.pie(predict_counts, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90)
-    ax1.set_title('Predicted Class Distribution')
-
-    # Gráfico de pizza para classes reais (actual)
-    ax2.pie(actual_counts, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90)
-    ax2.set_title('Actual Class Distribution')
-
-    plt.tight_layout()
-    plt.show() """
-
-"""
-def plot_dual_pie_charts(predict_counts, actual_counts):
-    # Verifique se há NaNs nos dados
-    if np.isnan(predict_counts).any() or np.isnan(actual_counts).any():
-        # Trate NaNs (substitua por 0, por exemplo)
-        predict_counts = np.nan_to_num(predict_counts, nan=0.0)
-        actual_counts = np.nan_to_num(actual_counts, nan=0.0)
-    
-    # Verifique se predict_counts e actual_counts têm o mesmo número de elementos
-    if len(predict_counts) != len(actual_counts):
-        raise ValueError("predict_counts e actual_counts devem ter o mesmo número de elementos.")
-
-    # Defina os rótulos de acordo com o número de fatias
-    labels = ['Predicted', 'Actual']
-    colors = ['blue', 'green']
-    
-    # Verifique se o número de rótulos corresponde ao número de fatias
-    if len(labels) != len(predict_counts):
-        raise ValueError("Número incorreto de rótulos fornecidos para o número de fatias.")
-
-    fig, (ax1, ax2) = plt.subplots(1, 2)
-    ax1.pie(predict_counts, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90)
-    ax2.pie(actual_counts, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90)
-
-    ax1.set_title('Predicted Distribution')
-    ax2.set_title('Actual Distribution')
-
-    plt.show"""
-
 def plot_dual_pie_charts(predict_counts, actual_counts):
     # Verificar se predict_counts e actual_counts têm o mesmo número de elementos
     if len(predict_counts) != len(actual_counts):
