@@ -3,7 +3,7 @@ from sklearn.ensemble import RandomForestClassifier
 from naive_bayes import Naive_bayes
 from svm import SVM_model
 from random_forest import RandomForest 
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix
 from dados import Dados
 import graficos
 
@@ -83,7 +83,7 @@ while True:
     report2 = rd.predict(df.get_test_x())  # Replace with actual predictions for report
     conf_matrix2 = rd.confusion_matrix(df.get_test_y(), report2)  # Replace with actual confusion matrix
 """
-    from sklearn.metrics import accuracy_score, confusion_matrix
+    
 
     # 1. Calcular a acurácia
     predictions = rd.predict(df.get_test_x())
