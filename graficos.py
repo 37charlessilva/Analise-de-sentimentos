@@ -26,6 +26,11 @@ def plot_dual_pie_charts(predict_counts, actual_counts):
         predict_counts = np.nan_to_num(predict_counts, nan=0.0)
         actual_counts = np.nan_to_num(actual_counts, nan=0.0)
     
+    # Verifique se predict_counts e actual_counts têm o mesmo número de elementos
+    if len(predict_counts) != len(actual_counts):
+        raise ValueError("predict_counts e actual_counts devem ter o mesmo número de elementos.")
+
+    # Defina os rótulos de acordo com o número de fatias
     labels = ['Predicted', 'Actual']
     colors = ['blue', 'green']
     
