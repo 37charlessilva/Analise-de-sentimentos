@@ -7,23 +7,25 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 from dados import Dados
 import graficos
 
-
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
-
-# Bases de dados e modelos
+# nome das bases de dados e modelos
 bases = ['Bases/b2w', 'Bases/buscape', 'Bases/olist', 'Bases/utlc_apps']
 s = ['svm_model', 'random_forest_model']
 
-# Inicialização dos modelos
+# inicializa a classe Naive_bayes
 nv = Naive_bayes()
-rd = RandomForestClassifier()
+
+# inicializa a classe SVM_model
 sv = SVM_model()
+
+# inicializa o modelo random forest
+rd = RandomForestClassifier()
 
 modelos = [nv, sv, rd]
 
 while True:
-    # Menu inicial para escolha da base de dados
+    # Menu inicial
     print("Escolha sua base de dados\n"
           "1: B2w\n"
           "2: Buscape\n"
@@ -31,7 +33,7 @@ while True:
           "4: Utlc_apps")
     resposta = int(input("Resposta: "))
 
-    # Carrega os dados a partir de um arquivo CSV
+    # carrega os dados a partir de um arquivo CSV
     df = Dados(bases[resposta - 1] + ".csv")
 
     # Separando o conjunto de treino e teste
@@ -55,25 +57,24 @@ while True:
                 print(f"{s[c - 1].upper()} treinado")
             elif isinstance(modelos[c], SVM_model):
                 print(f"{s[c - 1].upper()} em treinamento, pode levar algum tempo\n")
-                modelos[c].train(df.get_train_x(), df.get_train_y())  # Implemente o método train no SVM_model
+                modelos[c].train(df.get_train_x(), df.get_train_y())  # Utilizando o método train do SVM_model
                 dump(modelos[c], f"{bases[resposta - 1]}_{s[c - 1]}_.pk1")
                 print(f"{s[c - 1].upper()} treinado")
         else:
             print(f"Modelo {s[c - 1]} recuperado\n")
             modelos[c] = load(f"{bases[resposta - 1]}_{s[c - 1]}_.pk1")
     
-    # Atribuição correta dos modelos treinados
     sv = modelos[1]
     rd = modelos[2]
 
     # Avaliação do desempenho dos modelos
-    accuracy_nv = nv.accuracy_score()
-    report_nv = nv.classification_report()
-    conf_matrix_nv = nv.confusion_matrix()
+    accuracy_nv = nv.accuracy_score(df.get_test_x(), df.get_test_y())
+    report_nv = nv.classification_report(df.get_test_x(), df.get_test_y())
+    conf_matrix_nv = nv.confusion_matrix(df.get_test_x(), df.get_test_y())
 
-    accuracy_sv = sv.accuracy_score()
-    report_sv = sv.classification_report()
-    conf_matrix_sv = sv.confusion_matrix()
+    accuracy_sv = sv.accuracy_score(df.get_test_x(), df.get_test_y())
+    report_sv = sv.classification_report(df.get_test_x(), df.get_test_y())
+    conf_matrix_sv = sv.confusion_matrix(df.get_test_x(), df.get_test_y())
 
     predictions_rf = rd.predict(df.get_test_x())
     accuracy_rf = accuracy_score(df.get_test_y(), predictions_rf)
@@ -108,6 +109,7 @@ while True:
             print("Opção inválida. Tente novamente.")
 
     print()
+
 
 """
 # nome das bases de dados e modelos
