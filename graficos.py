@@ -28,6 +28,9 @@ def plot_dual_pie_charts(predict_counts, actual_counts):
     
     labels = ['Predicted', 'Actual']
     colors = ['blue', 'green']
+    
+    if len(predict_counts) != len(labels) or len(actual_counts) != len(labels):
+        raise ValueError("Número incorreto de rótulos fornecidos para o número de fatias.")
 
     fig, (ax1, ax2) = plt.subplots(1, 2)
     ax1.pie(predict_counts, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90)
