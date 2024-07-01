@@ -20,6 +20,9 @@ sv = SVM_model()
 # inicializa o modelo random forest
 rd = RandomForestClassifier()
 
+# inicializa a classe classes
+classes = ['positivo', 'negativo', 'neutro']
+
 modelos = [nv, sv, rd]
 
 while True:
