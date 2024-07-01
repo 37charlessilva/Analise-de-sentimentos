@@ -7,6 +7,124 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 from dados import Dados
 import graficos
 
+
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.model_selection import GridSearchCV
+
+
+
+# Listas de bases e modelos
+bases = ['Bases/b2w', 'Bases/buscape', 'Bases/olist', 'Bases/utlc_apps']
+s = ['svm_model', 'random_forest_model']
+
+# Inicializa os modelos
+nv = Naive_bayes()
+rd = RandomForestClassifier()
+
+modelos = [nv, rd]
+
+# Parâmetros para Grid Search no SVM
+param_grid = {'C': [0.1, 1, 10, 100],
+              'gamma': [1, 0.1, 0.01, 0.001],
+              'kernel': ['linear', 'rbf']}
+
+while True:
+    # Menu inicial para seleção da base de dados
+    print("Escolha sua base de dados\n"
+          "1: B2w\n"
+          "2: Buscape\n"
+          "3: Olist\n" 
+          "4: Utlc_apps")
+    i = int(input("Resposta: "))
+
+    # Carrega os dados a partir de um arquivo CSV
+    df = Dados(bases[i - 1] + ".csv")
+
+    # Separação do conjunto de treino e teste
+    df.trainig_data()
+
+    print('\nConjuntos de treinamento e teste separados!')
+    print('Tamanho do conjunto de treinamento:', df.get_train_x().shape) 
+    print('Tamanho do conjunto de teste:', df.get_test_x().shape)
+    
+    # Treinamento do Naive Bayes
+    nv.start(df.get_train_x(), df.get_test_x(), df.get_train_y(), df.get_test_y()) 
+    print("\nModelo Naive Bayes treinado\n")
+
+    # Treinamento do Random Forest
+    if df.verify(f"{bases[i - 1]}_{s[1]}_.pk1") == False:
+        rd.fit(df.get_train_x(), df.get_train_y())
+        dump(rd, f"{bases[i - 1]}_{s[1]}_.pk1")
+        print(f"{s[1].upper()} treinado")
+    else:
+        print(f"Modelo {s[1]} recuperado\n")
+        rd = load(f"{bases[i - 1]}_{s[1]}_.pk1")
+    
+    # Treinamento do SVM com Grid Search
+    if df.verify(f"{bases[i - 1]}_{s[0]}_.pk1") == False:
+        print(f"{s[0].upper()} em treinamento, pode levar algum tempo\n")
+        clf = GridSearchCV(SVC(), param_grid, cv=5, n_jobs=-1)
+        clf.fit(df.get_train_x(), df.get_train_y())
+        dump(clf.best_estimator_, f"{bases[i - 1]}_{s[0]}_.pk1")
+        print(f"{s[0].upper()} treinado")
+    else:
+        print(f"Modelo {s[0]} recuperado\n")
+        clf = load(f"{bases[i - 1]}_{s[0]}_.pk1")
+
+    # Avaliação do desempenho do modelo Naive Bayes
+    accuracy = nv.accuracy_score()
+    report = nv.classification_report()
+    conf_matrix = nv.confusion_matrix()
+
+    # Avaliação do desempenho do modelo Random Forest
+    predictions = rd.predict(df.get_test_x())
+    accuracy2 = accuracy_score(df.get_test_y(), predictions)
+    report2 = classification_report(df.get_test_y(), predictions)
+    conf_matrix2 = confusion_matrix(df.get_test_y(), predictions)
+
+    # Avaliação do desempenho do modelo SVM
+    if df.verify(f"{bases[i - 1]}_{s[0]}_.pk1"):
+        clf = load(f"{bases[i - 1]}_{s[0]}_.pk1")
+        predictions3 = clf.predict(df.get_test_x())
+        accuracy3 = accuracy_score(df.get_test_y(), predictions3)
+        report3 = classification_report(df.get_test_y(), predictions3)
+        conf_matrix3 = confusion_matrix(df.get_test_y(), predictions3)
+    else:
+        print(f"Modelo {s[0]} não encontrado. Realize o treinamento primeiro.")
+        continue
+
+    # Menu de opções para visualização
+    while True:
+        print("\n0: Para voltar\n"
+              "1: Comparação de acurácia\n"
+              "2: Comparação dos relatórios de classificação\n"
+              "3: Matriz de confusão\n"
+              "4: Gráfico de Pizza")
+        choice = int(input("Resposta: "))
+        
+        if choice == 0:
+            break
+        elif choice == 1:
+            graficos.plot_model_comparison(df.get_train_x().shape, df.get_test_x().shape, accuracy, accuracy2, accuracy3)
+        elif choice == 2:
+            classes = df.get_classes()
+            graficos.plot_classification_reports(report, report2, report3, classes, "Naive Bayes", "Random Forest", "SVM")
+        elif choice == 3:
+            graficos.plot_confusion_matrix(conf_matrix, df.get_classes())
+            graficos.plot_confusion_matrix(conf_matrix2, df.get_classes())
+            graficos.plot_confusion_matrix(conf_matrix3, df.get_classes())
+        elif choice == 4:
+            predict_counts = [list(report.values()).count(classe) for classe in classes]
+            actual_counts = [list(df.get_test_y()).count(classe) for classe in classes]
+            graficos.plot_dual_pie_charts(predict_counts, actual_counts)
+        else:
+            print("Opção inválida. Tente novamente.")
+
+    print()
+
+
+"""
 # Listas de bases e modelos
 bases = ['Bases/b2w', 'Bases/buscape', 'Bases/olist', 'Bases/utlc_apps']
 s = ['svm_model', 'random_forest_model']
@@ -111,7 +229,7 @@ while True:
             print("Opção inválida. Tente novamente.")
 
     print()
-
+"""
 """
 # nome das bases de dados e modelos
 bases = ['Bases/b2w', 'Bases/buscape', 'Bases/olist', 'Bases/utlc_apps']
