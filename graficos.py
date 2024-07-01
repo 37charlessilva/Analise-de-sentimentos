@@ -35,7 +35,7 @@ def plot_dual_pie_charts(predict_counts, actual_counts):
     colors = ['blue', 'green']
     
     # Verifique se o número de rótulos corresponde ao número de fatias
-    if len(labels) != len(predict_counts) or len(labels) != len(actual_counts):
+    if len(labels) != len(predict_counts):
         raise ValueError("Número incorreto de rótulos fornecidos para o número de fatias.")
 
     fig, (ax1, ax2) = plt.subplots(1, 2)
