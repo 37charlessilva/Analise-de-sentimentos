@@ -74,12 +74,30 @@ while True:
     accuracy1 = sv.accuracy_score()
     report1 = sv.classification_report()
     conf_matrix1 = sv.confusion_matrix()
-    
+    """
     # Avaliação do desempenho do modelo RandomForestClassifier
     accuracy2 = rd.score(df.get_test_x(), df.get_test_y())  # Usando score() para RandomForestClassifier
     report2 = rd.predict(df.get_test_x())  # Replace with actual predictions for report
     conf_matrix2 = rd.confusion_matrix(df.get_test_y(), report2)  # Replace with actual confusion matrix
+"""
+    from sklearn.metrics import accuracy_score, confusion_matrix
 
+    # 1. Calcular a acurácia
+    predictions = rd.predict(df.get_test_x())
+    accuracy2 = accuracy_score(df.get_test_y(), predictions)
+    print(f'Acurácia do RandomForestClassifier: {accuracy2}')
+    
+    # 2. Gerar o relatório de classificação (opcional)
+    # Se você quiser um relatório detalhado, pode usar sklearn.metrics.classification_report
+    from sklearn.metrics import classification_report
+    report2 = classification_report(df.get_test_y(), predictions)
+    print(f'Relatório de classificação:\n{report2}')
+    
+    # 3. Gerar a matriz de confusão
+    conf_matrix2 = confusion_matrix(df.get_test_y(), predictions)
+    print(f'Matriz de Confusão:\n{conf_matrix2}')
+
+    
     while i != 0:
         print("\n0: Para voltar\n"
               "1: Comparação de acurácia\n"
