@@ -1,13 +1,11 @@
 from joblib import load, dump
 from sklearn.ensemble import RandomForestClassifier
 from naive_bayes import Naive_bayes
-from svm import SVM_model
+from svm import SVM_model  # Supondo que você tenha definido sua classe SVM_model corretamente
 from random_forest import RandomForest 
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from dados import Dados
 import graficos
-
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
 # nome das bases de dados e modelos
 bases = ['Bases/b2w', 'Bases/buscape', 'Bases/olist', 'Bases/utlc_apps']
