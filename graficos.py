@@ -55,8 +55,8 @@ def plot_dual_pie_charts(predict_counts, actual_counts):
         raise ValueError("predict_counts e actual_counts devem ter o mesmo número de elementos.")
 
     # Definir rótulos de acordo com o número de fatias
-    labels = ['Positive', 'Neutral', 'Negative']  # Exemplo de rótulos
-    colors = ['#1f77b4', '#ff7f0e', '#2ca02c']  # Exemplo de cores
+    labels = ['Positivo', 'Neutro', 'Negativo'] 
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c']  
     
     # Verificar se o número de rótulos corresponde ao número de fatias
     if len(labels) != len(predict_counts):
