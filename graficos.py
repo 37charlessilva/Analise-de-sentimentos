@@ -25,11 +25,11 @@ def plot_dual_pie_charts(predict_counts, actual_counts):
 
     plt.tight_layout()
     plt.show()
-
+"""
 # Exemplo de uso
 predict_counts = [60, 30, 10]  # Exemplo com três valores
 actual_counts = [50, 35, 15]   # Exemplo com três valores
-plot_dual_pie_charts(predict_counts, actual_counts)
+plot_dual_pie_charts(predict_counts, actual_counts)"""
 
     
 def plot_confusion_matrix(conf_matrix, nv_classes_):
