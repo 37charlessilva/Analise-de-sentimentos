@@ -3,6 +3,7 @@ from sklearn.ensemble import RandomForestClassifier
 from naive_bayes import Naive_bayes
 from svm import SVM_model
 from random_forest import RandomForest 
+from sklearn.metrics import confusion_matrix
 from dados import Dados
 import graficos
 
