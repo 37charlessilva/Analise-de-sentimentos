@@ -78,7 +78,7 @@ while True:
     # Avaliação do desempenho do modelo RandomForestClassifier
     accuracy2 = rd.score(df.get_test_x(), df.get_test_y())  # Usando score() para RandomForestClassifier
     report2 = rd.predict(df.get_test_x())  # Replace with actual predictions for report
-    conf_matrix2 = confusion_matrix(df.get_test_y(), report2)  # Replace with actual confusion matrix
+    conf_matrix2 = rd.confusion_matrix(df.get_test_y(), report2)  # Replace with actual confusion matrix
 
     while i != 0:
         print("\n0: Para voltar\n"
