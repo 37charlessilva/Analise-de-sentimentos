@@ -19,6 +19,8 @@ def plot_dual_pie_charts(predict_counts, actual_counts):
 
     plt.tight_layout()
     plt.show() """
+
+"""
 def plot_dual_pie_charts(predict_counts, actual_counts):
     # Verifique se há NaNs nos dados
     if np.isnan(predict_counts).any() or np.isnan(actual_counts).any():
@@ -45,8 +47,32 @@ def plot_dual_pie_charts(predict_counts, actual_counts):
     ax1.set_title('Predicted Distribution')
     ax2.set_title('Actual Distribution')
 
-    plt.show()
+    plt.show"""
 
+def plot_dual_pie_charts(predict_counts, actual_counts):
+    # Verifique se predict_counts e actual_counts têm o mesmo número de elementos
+    if len(predict_counts) != len(actual_counts):
+        raise ValueError("predict_counts e actual_counts devem ter o mesmo número de elementos.")
+
+    # Defina os rótulos com base nos dados fornecidos
+    labels = ['Predicted', 'Actual']
+    colors = ['blue', 'green']
+
+    # Verifique se o número de rótulos corresponde ao número de fatias
+    if len(labels) != len(predict_counts):
+        raise ValueError("Número incorreto de rótulos fornecidos para o número de fatias.")
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
+
+    ax1.pie(predict_counts, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90)
+    ax1.set_title('Predicted Class Distribution')
+
+    ax2.pie(actual_counts, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90)
+    ax2.set_title('Actual Class Distribution')
+
+    plt.tight_layout()
+    plt.show()
+    
 def plot_confusion_matrix(conf_matrix, nv_classes_):
     # Plot confusion matrix
     plt.figure(figsize=(14, 6))
