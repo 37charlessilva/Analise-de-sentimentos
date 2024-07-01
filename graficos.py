@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
+"""
 def plot_dual_pie_charts(predict_counts, actual_counts):
     labels = ['Positivo', 'Neutro', 'Negativo']
     colors = ['#1f77b4', '#ff7f0e', '#2ca02c']
@@ -17,6 +18,24 @@ def plot_dual_pie_charts(predict_counts, actual_counts):
     ax2.set_title('Actual Class Distribution')
 
     plt.tight_layout()
+    plt.show() """
+def plot_dual_pie_charts(predict_counts, actual_counts):
+    # Verifique se há NaNs nos dados
+    if np.isnan(predict_counts).any() or np.isnan(actual_counts).any():
+        # Trate NaNs (substitua por 0, por exemplo)
+        predict_counts = np.nan_to_num(predict_counts, nan=0.0)
+        actual_counts = np.nan_to_num(actual_counts, nan=0.0)
+    
+    labels = ['Predicted', 'Actual']
+    colors = ['blue', 'green']
+
+    fig, (ax1, ax2) = plt.subplots(1, 2)
+    ax1.pie(predict_counts, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90)
+    ax2.pie(actual_counts, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90)
+
+    ax1.set_title('Predicted Distribution')
+    ax2.set_title('Actual Distribution')
+
     plt.show()
 
 def plot_confusion_matrix(conf_matrix, nv_classes_):
